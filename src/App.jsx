@@ -2,20 +2,17 @@ import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import './App.css'
 
 function App() {
-  // 1. Memoize the target deep link URL
 const targetUrl = useMemo(() => { 
   return `allinone://verify-email${window.location.search}`; 
 }, []); 
 
 const [isOpening, setIsOpening] = useState(true); 
 
-// Automatically redirect after 2 seconds
 useEffect(() => { 
   const redirectTimer = window.setTimeout(() => {
     window.location.replace(targetUrl);
     setIsOpening(false); 
-  }, 2000); // 2000ms = 2 seconds delay
-
+  }, 1000);
   // Clean up the timer if the component unmounts before 2 seconds
   return () => window.clearTimeout(redirectTimer); 
 }, [targetUrl]); 
