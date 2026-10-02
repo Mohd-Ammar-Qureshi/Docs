@@ -150,7 +150,7 @@ const styles = {
     fontSize: "65px",
     fontWeight: 900,
     letterSpacing: "-1px",
-    paddingBottom: '12px'
+    paddingBottom: '15px'
   },
 
   badge: {
