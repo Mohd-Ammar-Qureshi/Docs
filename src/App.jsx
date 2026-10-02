@@ -12,68 +12,73 @@ function App() {
     const timer = window.setTimeout(() => {
       setIsOpening(false);
     }, 3500);
-  
+
     window.location.replace(targetUrl);
 
     return () => window.clearTimeout(timer);
 
   }, [targetUrl]);
 
+
   const openApp = () => {
-    setIsOpening(true);
-    window.location.href = targetUrl;
+    useEffect(() => {
+     const timer = window.setTimeout(() => {
+      setIsOpening(true);
+    }, 2000);
+      window.location.href = targetUrl;
+    }, [targetUrl]);
   };
 
   return (
-  <div style={styles.page}>
-     <div style={styles.backgroundGlowOne} /> 
-     <div style={styles.backgroundGlowTwo} />
-    <main style={styles.card}>
-      <div style={styles.logoCircle}>
-        <div style={styles.logoMark}>+</div>
-      </div>
-
-      <div style={styles.badge}>
-        <span style={styles.badgeIcon}>✓</span>
-        Email Verified
-      </div>
-
-      <h1 style={styles.title}>
-        Welcome to <span style={styles.brand}>AllInOne</span>
-      </h1>
-
-      <p style={styles.description}>
-        Your email has been successfully verified.
-        <br />
-        We’re opening the AllInOne app for you.
-      </p>
-
-      <div style={styles.statusBox}>
-        <div style={styles.spinner} />
-
-        <div style={styles.statusContent}>
-          <strong style={styles.statusTitle}>
-            {isOpening ? "Opening AllInOne..." : "Ready to open AllInOne"}
-          </strong>
-
-          <span style={styles.statusText}>
-            {isOpening
-              ? "Please wait a moment"
-              : "Tap the button below if the app did not open automatically."}
-          </span>
+    <div style={styles.page}>
+      <div style={styles.backgroundGlowOne} />
+      <div style={styles.backgroundGlowTwo} />
+      <main style={styles.card}>
+        <div style={styles.logoCircle}>
+          <div style={styles.logoMark}>+</div>
         </div>
-      </div>
 
-      <button type="button" onClick={openApp} style={styles.button}>
-        <span>Open AllInOne</span>
-        <span style={styles.arrow}>→</span>
-      </button>
+        <div style={styles.badge}>
+          <span style={styles.badgeIcon}>✓</span>
+          Email Verified
+        </div>
 
-      <p style={styles.footerText}>
-        AllInOne · Medical B2B Marketplace
-      </p>
-    </main>
-  </div>
+        <h1 style={styles.title}>
+          Welcome to <span style={styles.brand}>AllInOne</span>
+        </h1>
+
+        <p style={styles.description}>
+          Your email has been successfully verified.
+          <br />
+          We’re opening the AllInOne app for you.
+        </p>
+
+        <div style={styles.statusBox}>
+          <div style={styles.spinner} />
+
+          <div style={styles.statusContent}>
+            <strong style={styles.statusTitle}>
+              {isOpening ? "Opening AllInOne..." : "Ready to open AllInOne"}
+            </strong>
+
+            <span style={styles.statusText}>
+              {isOpening
+                ? "Please wait a moment"
+                : "Tap the button below if the app did not open automatically."}
+            </span>
+          </div>
+        </div>
+
+        <button type="button" onClick={openApp} style={styles.button}>
+          <span>Open AllInOne</span>
+          <span style={styles.arrow}>→</span>
+        </button>
+
+        <p style={styles.footerText}>
+          AllInOne · Medical B2B Marketplace
+        </p>
+      </main>
+    </div>
 
   );
 }
