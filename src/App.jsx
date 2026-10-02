@@ -9,27 +9,23 @@ const targetUrl = useMemo(() => {
 
 const [isOpening, setIsOpening] = useState(true); 
 
-// 2. Automatically attempt to open the app on mount
+// Automatically redirect after 2 seconds
 useEffect(() => { 
-  const timer = window.setTimeout(() => { 
+  const redirectTimer = window.setTimeout(() => {
+    window.location.replace(targetUrl);
     setIsOpening(false); 
-  }, 4000); 
+  }, 2000); // 2000ms = 2 seconds delay
 
-  window.location.replace(targetUrl); 
-
-  // Clean up timer on unmount
-  return () => window.clearTimeout(timer); 
+  // Clean up the timer if the component unmounts before 2 seconds
+  return () => window.clearTimeout(redirectTimer); 
 }, [targetUrl]); 
 
-// 3. Corrected manual trigger function (Hooks removed from inside)
+// Manual trigger button function (if they want to try again)
 const openApp = useCallback(() => {
   setIsOpening(true);
-  
-  const timer = window.setTimeout(() => {
-    setIsOpening(false);
-  }, 4000); // Keeps state consistent with the auto-fallback time
-
   window.location.href = targetUrl;
+
+  return () => window.clearTimeout(stateTimer);
 }, [targetUrl]);
 
   return (
