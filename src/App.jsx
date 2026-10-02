@@ -1,33 +1,36 @@
-import { useEffect, useMemo, useState } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import './App.css'
 
 function App() {
-  const targetUrl = useMemo(() => {
-    return `allinone://verify-email${window.location.search}`;
-  }, []);
+  // 1. Memoize the target deep link URL
+const targetUrl = useMemo(() => { 
+  return `allinone://verify-email${window.location.search}`; 
+}, []); 
 
-  const [isOpening, setIsOpening] = useState(true);
+const [isOpening, setIsOpening] = useState(true); 
 
-  useEffect(() => {
-    const timer = window.setTimeout(() => {
-      setIsOpening(false);
-    }, 3500);
+// 2. Automatically attempt to open the app on mount
+useEffect(() => { 
+  const timer = window.setTimeout(() => { 
+    setIsOpening(false); 
+  }, 4000); 
 
-    window.location.replace(targetUrl);
+  window.location.replace(targetUrl); 
 
-    return () => window.clearTimeout(timer);
+  // Clean up timer on unmount
+  return () => window.clearTimeout(timer); 
+}, [targetUrl]); 
 
-  }, [targetUrl]);
+// 3. Corrected manual trigger function (Hooks removed from inside)
+const openApp = useCallback(() => {
+  setIsOpening(true);
+  
+  const timer = window.setTimeout(() => {
+    setIsOpening(false);
+  }, 4000); // Keeps state consistent with the auto-fallback time
 
-
-  const openApp = () => {
-    useEffect(() => {
-     const timer = window.setTimeout(() => {
-      setIsOpening(true);
-    }, 2000);
-      window.location.href = targetUrl;
-    }, [targetUrl]);
-  };
+  window.location.href = targetUrl;
+}, [targetUrl]);
 
   return (
     <div style={styles.page}>
