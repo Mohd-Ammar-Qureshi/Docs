@@ -12,7 +12,7 @@ function App() {
     const timer = window.setTimeout(() => {
       setIsOpening(false);
     }, 3500);
-
+  
     window.location.replace(targetUrl);
 
     return () => window.clearTimeout(timer);
